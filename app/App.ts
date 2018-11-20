@@ -1,8 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import {AppConfig} from '../config/AppConfig';
-import {DatabaseAdapter} from './DatabaseAdapter';
+import {Router} from '../route/Router';
+import {AppConfig} from './AppConfig';
+import {DatabaseAdapter} from '../storage/DatabaseAdapter';
 
 export class App {
     /**
@@ -13,25 +14,42 @@ export class App {
      * @var AppConfig
      */
     private readonly config: AppConfig;
-    /**
-     * @var DatabaseAdapter
-     */
-    public database: DatabaseAdapter;
 
     constructor() {
         this.express = express();
         this.config = new AppConfig();
-        this.database = new DatabaseAdapter();
     }
 
     public run() {
-        const params = this.config.getParameters();
+        this.initAPIRouter();
+        this.initDatabaseConnection();
+        this.initMiddleware();
 
-        this.database.connect(
+        this.listen();
+    }
+
+    private initAPIRouter() {
+        this.express.use('/api', Router.init());
+    }
+
+    private initDatabaseConnection() {
+        const params = this.config.getParameters();
+        const adapter = new DatabaseAdapter();
+
+        console.log(params);
+
+        this.express.set('database', adapter.connect(
             params.database.username,
             params.database.password
-        );
+        ));
+    }
+
+    private initMiddleware() {
         this.express.use(bodyParser());
+    }
+
+    private listen() {
+        const params = this.config.getParameters();
 
         this.express.listen(params.port, params.host, () => {
             console.log(`App listening on http://${params.host}:${params.port}`);
