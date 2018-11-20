@@ -36,8 +36,6 @@ export class App {
         const params = this.config.getParameters();
         const adapter = new DatabaseAdapter();
 
-        console.log(params);
-
         this.express.set('database', adapter.connect(
             params.database.username,
             params.database.password

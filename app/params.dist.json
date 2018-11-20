@@ -1,10 +1,18 @@
 {
+  "test": {
+    "host": "0.0.0.0",
+    "port": 2000,
+    "database": {
+      "username": "",
+      "password": ""
+    }
+  },
   "dev": {
     "host": "0.0.0.0",
     "port": 3000,
     "database": {
-      "username": "",
-      "password": ""
+      "username": "user1",
+      "password": "the password"
     }
   },
   "staging": {

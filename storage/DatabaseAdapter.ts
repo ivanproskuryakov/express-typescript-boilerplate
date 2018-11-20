@@ -11,7 +11,7 @@ export class DatabaseAdapter {
      * @return DBClient
      */
     public connect(username: string, password: string): DBClient {
-        new DBClient(
+        return new DBClient(
             username,
             password
         )

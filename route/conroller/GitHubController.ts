@@ -15,7 +15,7 @@ export class GitHubController {
                 .get(`https://api.github.com/repos/${owner}/${repoName}`)
                 .then(res => res.data);
 
-        req.get('database')
+        req.app.get('database')
             .fetchRepos()
             .then((repos: any) => {
                 const reposGHInfo = [];
@@ -26,7 +26,7 @@ export class GitHubController {
 
                 return Promise.all(reposGHInfo);
             })
-            .then(reposInfo => {
+            .then((reposInfo: any) => {
                 const result = [];
 
                 for (let i = 0; i < reposInfo.length; i++) {
