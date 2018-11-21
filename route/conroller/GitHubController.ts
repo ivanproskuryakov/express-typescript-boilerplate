@@ -11,7 +11,7 @@ export class GitHubController {
         const gitHubService = new GitHubService();
 
         gitHubService
-            .getRepoDetails(req.body.username, req.body.repo)
+            .getRepoDetails(req.body.repoName, req)
             .then(data => res.status(200).send(data))
     }
 
@@ -23,7 +23,7 @@ export class GitHubController {
         const gitHubService = new GitHubService();
 
         gitHubService
-            .getRepoCollection(req.body.username, req)
+            .getRepoCollection(req.body.userName, req)
             .then(data => res.status(200).send(data))
     }
 

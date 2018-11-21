@@ -8,13 +8,12 @@ export class GitHubControllerTest extends BaseControllerTest {
 
     @test('repoDetailsAction success')
     repoDetailsAction(done: Function) {
-        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repo-details`;
+        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-repo`;
         let config: {} = {
             url: url,
             method: 'POST',
             data: {
-                username: 'ivanproskuryakov',
-                repo: 'Aisel',
+                repoName: 'react',
             }
         };
         HttpHelper
@@ -25,14 +24,14 @@ export class GitHubControllerTest extends BaseControllerTest {
             });
     }
 
-    @test('repoDetailsAction success')
+    @test('repoCollectionAction success')
     repoCollectionAction(done: Function) {
-        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repo-collection`;
+        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repos`;
         let config: {} = {
             url: url,
             method: 'GET',
             data: {
-                username: 'gaearon',
+                userName: 'gaearon',
             }
         };
         HttpHelper
