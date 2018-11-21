@@ -1,31 +1,20 @@
 import {suite, test} from 'mocha-typescript';
 import {BaseControllerTest} from "./BaseControllerTest";
-import axios from "axios";
+import {HttpHelper} from "../../../helper/HttpHelper";
 
 @suite('Router')
 export class GitHubControllerTest extends BaseControllerTest {
 
     @test('postAction success')
     postAction(done: Function) {
-        axios
-            .post(`${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repos`, {
-                params: {
-                    ID: 12345
-                }
-            })
+        HttpHelper
+            .request(
+                `http://0.0.0.0:2000/api/gh-user-repos`,
+                {method: 'GET'}
+            )
             .then((res: any) => {
-                console.log(res.data);
+                console.log(res);
                 done();
             });
-
-        // request(app)
-        //     .get('http://0.0.0.0:3000/api/gh-user-repos')
-        //     .end(function (err: any, res: any) {
-        //         if (err) throw err;
-        //
-        //         console.log(err);
-        //         console.log(res.body);
-        //         done();
-        //     });
     }
 }

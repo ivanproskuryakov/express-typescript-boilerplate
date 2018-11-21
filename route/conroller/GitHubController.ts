@@ -1,19 +1,20 @@
 import {Request, Response} from 'express';
-import {HttpHelper} from "../../helper/HttpHelper";
+import {GitHubService} from "../../service/GitHubService";
 
 export class GitHubController {
 
     /**
-     // * @param {Request} request
-     // * @param {Response} response
+     * @param {Request} req
+     * @param {Response} res
      */
-    public postAction(req: Request, res: Response) {
-        HttpHelper
-            .request('https://jsonplaceholder.typicode.com/posts/1')
-            .then(data => {
-                console.log(req.params);
-                res.status(200).send(data);
-            });
+    public queryAction(req: Request, res: Response) {
+        const gitHubService = new GitHubService();
+        console.log(req.params);
+
+        gitHubService
+            .queryRepositoryInfo('ivanproskuryakov', 'Aisel')
+            .then(data => res.status(200).send(data))
     }
+
 
 }

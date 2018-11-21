@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as _ from 'lodash';
 
 /**
  * @class HttpHelper
@@ -35,12 +36,14 @@ export class HttpHelper {
         /* tslint:enable max-line-length */
     ];
 
-    public static request(url: string): Promise<any> {
+    public static request(url: string, options: any = {}): Promise<any> {
         const config = {
             url: url,
             method: 'GET',
             headers: {"User-Agent": this.getRandomAgent()}
         };
+
+        _.assign(config, options);
 
         return axios
             .request(config)
