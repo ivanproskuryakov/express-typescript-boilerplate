@@ -8,10 +8,13 @@ export class GitHubService {
      * @param {string} username
      * @param {string} repo
      */
-    public queryRepositoryInfo(username: string, repo: string): Promise<{}> {
+    public repoDetails(username: string, repo: string): Promise<{}> {
+
+
         let config: {} = {
             url: `${this.url}/${username}/${repo}`
         };
+
 
         return HttpHelper
             .request(config)

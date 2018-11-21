@@ -44,8 +44,6 @@ export class HttpHelper {
 
         _.assign(config, options);
 
-        console.log(options);
-
         return axios
             .request(config)
             .then((res: any) => {

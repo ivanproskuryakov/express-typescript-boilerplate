@@ -9,7 +9,7 @@ export class Router {
     public static init() {
         const gitHubController = new GitHubController();
 
-        return express.Router().post(`/gh-user-repos`, gitHubController.queryAction);
+        return express.Router().post(`/gh-user-repo-details`, gitHubController.repoDetailsAction);
     }
 
 }

@@ -9,6 +9,6 @@ export class RouterTest {
     initSuccess() {
         const router = Router.init();
 
-        expect(router.stack[0]['route']['path']).to.be.equal('/gh-user-repos');
+        expect(router.stack[0]['route']['path']).to.be.equal('/gh-user-repo-details');
     }
 }

@@ -1,13 +1,14 @@
 import {suite, test} from 'mocha-typescript';
 import {BaseControllerTest} from "./BaseControllerTest";
 import {HttpHelper} from "../../../helper/HttpHelper";
+import {expect} from "chai";
 
 @suite('Router')
 export class GitHubControllerTest extends BaseControllerTest {
 
-    @test('postAction success')
-    postAction(done: Function) {
-        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repos?a=1`;
+    @test('repoDetailsAction success')
+    repoDetailsAction(done: Function) {
+        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repo-details`;
         let config: {} = {
             url: url,
             method: 'POST',
@@ -19,7 +20,7 @@ export class GitHubControllerTest extends BaseControllerTest {
         HttpHelper
             .request(config)
             .then((res: any) => {
-                console.log(res);
+                expect(res.id).to.be.equal(17249478);
                 done();
             });
     }
