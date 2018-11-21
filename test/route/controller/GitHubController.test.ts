@@ -7,11 +7,17 @@ export class GitHubControllerTest extends BaseControllerTest {
 
     @test('postAction success')
     postAction(done: Function) {
+        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repos?a=1`;
+        let config: {} = {
+            url: url,
+            method: 'POST',
+            data: {
+                username: 'ivanproskuryakov',
+                repo: 'Aisel',
+            }
+        };
         HttpHelper
-            .request(
-                `http://0.0.0.0:2000/api/gh-user-repos`,
-                {method: 'GET'}
-            )
+            .request(config)
             .then((res: any) => {
                 console.log(res);
                 done();

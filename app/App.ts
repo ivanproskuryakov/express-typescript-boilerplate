@@ -1,10 +1,11 @@
 import express from 'express';
+import * as http from "http";
 import bodyParser from 'body-parser';
 
 import {Router} from '../route/Router';
 import {AppConfig} from './AppConfig';
 import {DatabaseAdapter} from '../storage/DatabaseAdapter';
-import * as http from "http";
+
 
 export class App {
     /**
@@ -32,8 +33,8 @@ export class App {
      * @param {Function} cb
      */
     public start(cb?: Function) {
-        this.initAPIRouter();
         this.initMiddleware();
+        this.initRouter();
 
         this.listen(cb);
     }
@@ -45,7 +46,11 @@ export class App {
         App.server.close(cb);
     }
 
-    private initAPIRouter() {
+    private initMiddleware() {
+        this.express.use(bodyParser());
+    }
+
+    private initRouter() {
         this.express.use('/api', Router.init());
     }
 
@@ -58,11 +63,6 @@ export class App {
             params.database.password
         ));
     }
-
-    private initMiddleware() {
-        this.express.use(bodyParser());
-    }
-
 
     /**
      * @param {Function} cb

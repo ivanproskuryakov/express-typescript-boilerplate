@@ -36,14 +36,15 @@ export class HttpHelper {
         /* tslint:enable max-line-length */
     ];
 
-    public static request(url: string, options: any = {}): Promise<any> {
-        const config = {
-            url: url,
+    public static request(options: any = {}): Promise<any> {
+        let config = {
             method: 'GET',
             headers: {"User-Agent": this.getRandomAgent()}
         };
 
         _.assign(config, options);
+
+        console.log(options);
 
         return axios
             .request(config)

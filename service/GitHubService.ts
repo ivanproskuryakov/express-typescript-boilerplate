@@ -9,13 +9,13 @@ export class GitHubService {
      * @param {string} repo
      */
     public queryRepositoryInfo(username: string, repo: string): Promise<{}> {
-        const url = `${this.url}/${username}/${repo}`;
+        let config: {} = {
+            url: `${this.url}/${username}/${repo}`
+        };
 
         return HttpHelper
-            .request(url)
+            .request(config)
             .then((data: {}) => {
-                // console.log(req.params);
-                // res.status(200).send(data);
 
                 return Promise.resolve(data);
             });

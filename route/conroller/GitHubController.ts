@@ -9,10 +9,9 @@ export class GitHubController {
      */
     public queryAction(req: Request, res: Response) {
         const gitHubService = new GitHubService();
-        console.log(req.params);
 
         gitHubService
-            .queryRepositoryInfo('ivanproskuryakov', 'Aisel')
+            .queryRepositoryInfo(req.body.username, req.body.repo)
             .then(data => res.status(200).send(data))
     }
 
