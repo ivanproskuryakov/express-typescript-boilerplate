@@ -4,7 +4,7 @@ import {App} from '../../../app/App';
  * Base class for server route tests
  * starts / shutdown server
  */
-export class BaseControllerTest {
+export class BaseControllerTestIntegationTest {
 
     /**
      * @type {App}
@@ -12,11 +12,11 @@ export class BaseControllerTest {
     protected static app: App;
 
     static before(done: (err?: Error) => void): void {
-        BaseControllerTest.app = new App('test');
-        BaseControllerTest.app.start(done);
+        BaseControllerTestIntegationTest.app = new App('test');
+        BaseControllerTestIntegationTest.app.start(done);
     }
 
     static after(done: (err?: Error) => void): void {
-        BaseControllerTest.app.stop(done);
+        BaseControllerTestIntegationTest.app.stop(done);
     }
 }

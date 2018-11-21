@@ -1,5 +1,8 @@
-import {HttpHelper} from "../helper/HttpHelper";
 import {Request} from 'express';
+
+import {HttpHelper} from "../helper/HttpHelper";
+import {RepoViewInterface} from "../interface/domain/RepoViewInterface";
+import {RepoModelInterface} from "../interface/domain/RepoModelInterface";
 
 export class GitHubService {
 
@@ -8,17 +11,19 @@ export class GitHubService {
     /**
      * @param {string} repoName
      * @param {Request} req
+     * @return Promise<RepoViewInterface>
      */
-    public getRepoDetails(repoName: string, req: Request): Promise<{}> {
+    public getRepoDetails(repoName: string, req: Request): Promise<RepoViewInterface> {
         return req.app
             .get('database')
             .getRepoByName(repoName)
             .then((res: any) => {
+
                 return this
                     .queryRepoDetails(res.owner, res.name)
                     .then((repoInfo: any) => {
 
-                        return Promise.resolve(this.view(res.owner, repoInfo));
+                        return Promise.resolve(this.buildView(res.owner, repoInfo));
                     });
             });
     }
@@ -26,12 +31,13 @@ export class GitHubService {
     /**
      * @param {string} userName
      * @param {Request} req
+     * @return Promise<RepoViewInterface[]>
      */
-    public getRepoCollection(userName: string, req: Request): Promise<{}> {
+    public getRepoCollection(userName: string, req: Request): Promise<RepoViewInterface[]> {
         return req.app
             .get('database')
             .fetchRepos()
-            .then((repos: any) => {
+            .then((repos: RepoModelInterface[]) => {
                 const reposGHInfo = [];
 
                 for (let i = 0; i < repos.length; i++) {
@@ -41,12 +47,12 @@ export class GitHubService {
                 return Promise.all(reposGHInfo);
             })
             .then((reposInfo: any) => {
-                const result = [];
+                const result: RepoViewInterface[] = [];
 
                 for (let i = 0; i < reposInfo.length; i++) {
                     if (reposInfo[i].owner.login === userName) {
                         result.push(
-                            this.view(userName, reposInfo)
+                            this.buildView(userName, reposInfo)
                         );
                     }
                 }
@@ -64,8 +70,6 @@ export class GitHubService {
             url: `${this.url}/${username}/${repo}`
         };
 
-        console.log(config);
-
         return HttpHelper
             .request(config)
             .then((data: {}) => {
@@ -77,8 +81,9 @@ export class GitHubService {
     /**
      * @param {{string}} userName
      * @param {{}} repo
+     * @return RepoViewInterface
      */
-    private view(userName: string, repo: any): any {
+    private buildView(userName: string, repo: any): RepoViewInterface {
         return {
             userName: userName,
             repoName: repo.name,

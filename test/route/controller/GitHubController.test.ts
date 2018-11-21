@@ -1,14 +1,14 @@
 import {suite, test} from 'mocha-typescript';
-import {BaseControllerTest} from "./BaseControllerTest";
+import {BaseControllerTestIntegationTest} from "./BaseControllerTest.integation.test";
 import {HttpHelper} from "../../../helper/HttpHelper";
 import {expect} from "chai";
 
 @suite('Router')
-export class GitHubControllerTest extends BaseControllerTest {
+export class GitHubControllerTest extends BaseControllerTestIntegationTest {
 
     @test('repoDetailsAction success')
     repoDetailsAction(done: Function) {
-        const url = `${BaseControllerTest.app.config.getServerUrl()}/gh-repo`;
+        const url = `${BaseControllerTestIntegationTest.app.config.getServerUrl()}/gh-repo`;
         let config: {} = {
             url: url,
             method: 'POST',
@@ -30,7 +30,7 @@ export class GitHubControllerTest extends BaseControllerTest {
 
     @test('repoCollectionAction success')
     repoCollectionAction(done: Function) {
-        const url = `${BaseControllerTest.app.config.getServerUrl()}/gh-user-repos`;
+        const url = `${BaseControllerTestIntegationTest.app.config.getServerUrl()}/gh-user-repos`;
         let config: {} = {
             url: url,
             method: 'GET',
