@@ -6,15 +6,16 @@ import axios from "axios";
 export class GitHubControllerTest extends BaseControllerTest {
 
     @test('postAction success')
-    postAction() {
+    postAction(done: Function) {
         axios
-            .get(`${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repos`, {
+            .post(`${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repos`, {
                 params: {
                     ID: 12345
                 }
             })
             .then((res: any) => {
                 console.log(res.data);
+                done();
             });
 
         // request(app)

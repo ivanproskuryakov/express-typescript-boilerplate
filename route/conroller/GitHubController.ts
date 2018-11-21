@@ -1,47 +1,19 @@
-// import axios from "axios";
 import {Request, Response} from 'express';
+import {HttpHelper} from "../../helper/HttpHelper";
 
 export class GitHubController {
 
     /**
-     * @param {Request} req
-     * @param {Response} res
+     // * @param {Request} request
+     // * @param {Response} response
      */
-    public static postAction(req: Request, res: Response) {
-
-        console.log(req.url);
-
-        // const getGHRepoInfo = (owner: any, repoName: any) =>
-        //     axios
-        //         .get(`https://api.github.com/repos/${owner}/${repoName}`)
-        //         .then(res => res.data);
-        //
-        // req.app.get('database')
-        //     .fetchRepos()
-        //     .then((repos: any) => {
-        //         const reposGHInfo = [];
-        //
-        //         for (let i = 0; i < repos.length; i++) {
-        //             reposGHInfo.push(getGHRepoInfo(repos[i].owner, repos[i].name));
-        //         }
-        //
-        //         return Promise.all(reposGHInfo);
-        //     })
-        //     .then((reposInfo: any) => {
-        //         const result = [];
-        //
-        //         for (let i = 0; i < reposInfo.length; i++) {
-        //             if (reposInfo[i].owner.login === userName) {
-        //                 result.push({
-        //                     userName,
-        //                     repoName: reposInfo[i].name,
-        //                     stars: reposInfo[i].stargazers_count
-        //                 });
-        //             }
-        //         }
-        //
-        //     });
-
-        res.status(200).send(req.url);
+    public postAction(req: Request, res: Response) {
+        HttpHelper
+            .request('https://jsonplaceholder.typicode.com/posts/1')
+            .then(data => {
+                console.log(req.params);
+                res.status(200).send(data);
+            });
     }
+
 }
