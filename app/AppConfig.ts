@@ -7,7 +7,7 @@ import {join} from "path";
  */
 export class AppConfig {
     /**
-     * @var EnvironmentInterface
+     * @type EnvironmentInterface
      */
     private readonly parameters: ConfigParametersInterface;
 

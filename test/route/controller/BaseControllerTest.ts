@@ -7,7 +7,7 @@ import {App} from '../../../app/App';
 export class BaseControllerTest {
 
     /**
-     * @var {App}
+     * @type {App}
      */
     protected static app: App;
 

@@ -36,6 +36,10 @@ export class HttpHelper {
         /* tslint:enable max-line-length */
     ];
 
+    /**
+     * @param {{}} options
+     * @return Promise
+     */
     public static request(options: any = {}): Promise<any> {
         let config = {
             method: 'GET',
@@ -53,6 +57,7 @@ export class HttpHelper {
 
     /**
      * returns random user agent
+     * @return string
      */
     private static getRandomAgent(): string {
         let min = 0;

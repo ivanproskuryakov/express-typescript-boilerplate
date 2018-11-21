@@ -24,4 +24,24 @@ export class GitHubControllerTest extends BaseControllerTest {
                 done();
             });
     }
+
+    @test('repoDetailsAction success')
+    repoCollectionAction(done: Function) {
+        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repo-collection`;
+        let config: {} = {
+            url: url,
+            method: 'GET',
+            data: {
+                username: 'gaearon',
+            }
+        };
+        HttpHelper
+            .request(config)
+            .then((res: any) => {
+                console.log(res);
+
+                expect(res).to.be.an.instanceOf(Array);
+                done();
+            });
+    }
 }

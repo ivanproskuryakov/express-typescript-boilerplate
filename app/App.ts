@@ -9,15 +9,15 @@ import {DatabaseAdapter} from '../storage/DatabaseAdapter';
 
 export class App {
     /**
-     * @var AppConfig
+     * @type AppConfig
      */
     public readonly config: AppConfig;
     /**
-     * @var http.Server
+     * @type http.Server
      */
     public static server: http.Server;
     /**
-     * @var express.Application
+     * @type express.Application
      */
     public readonly express: express.Application;
 
