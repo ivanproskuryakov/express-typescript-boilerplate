@@ -7,9 +7,13 @@ import {join} from "path";
  */
 export class AppConfig {
     /**
-     * @type EnvironmentInterface
+     * @type {EnvironmentInterface}
      */
     private readonly parameters: ConfigParametersInterface;
+    /**
+     * @type {string}
+     */
+    public readonly env: string;
 
     /**
      * @param {string} env
@@ -17,7 +21,8 @@ export class AppConfig {
     constructor(env: string) {
         const environments: EnvironmentInterface = require(join(__dirname, './params.json'));
 
-        this.parameters = environments[env];
+        this.env = env;
+        this.parameters = environments[this.env];
     }
 
     /**

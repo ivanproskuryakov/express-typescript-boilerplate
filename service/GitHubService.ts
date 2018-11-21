@@ -13,10 +13,13 @@ export class GitHubService {
         return req.app
             .get('database')
             .getRepoByName(repoName)
-            .then((res: any) => this.queryRepoDetails(res.owner, res.name))
-            .then((repoInfo: any) => {
+            .then((res: any) => {
+                return this
+                    .queryRepoDetails(res.owner, res.name)
+                    .then((repoInfo: any) => {
 
-                return Promise.resolve(repoInfo);
+                        return Promise.resolve(this.view(res.owner, repoInfo));
+                    });
             });
     }
 
@@ -42,11 +45,9 @@ export class GitHubService {
 
                 for (let i = 0; i < reposInfo.length; i++) {
                     if (reposInfo[i].owner.login === userName) {
-                        result.push({
-                            userName,
-                            repoName: reposInfo[i].name,
-                            stars: reposInfo[i].stargazers_count
-                        });
+                        result.push(
+                            this.view(userName, reposInfo)
+                        );
                     }
                 }
 
@@ -58,10 +59,12 @@ export class GitHubService {
      * @param {string} username
      * @param {string} repo
      */
-    public queryRepoDetails(username: string, repo: string): Promise<{}> {
+    private queryRepoDetails(username: string, repo: string): Promise<{}> {
         let config: {} = {
             url: `${this.url}/${username}/${repo}`
         };
+
+        console.log(config);
 
         return HttpHelper
             .request(config)
@@ -69,6 +72,18 @@ export class GitHubService {
 
                 return Promise.resolve(data);
             });
+    }
+
+    /**
+     * @param {{string}} userName
+     * @param {{}} repo
+     */
+    private view(userName: string, repo: any): any {
+        return {
+            userName: userName,
+            repoName: repo.name,
+            stars: repo.stargazers_count
+        }
     }
 
 

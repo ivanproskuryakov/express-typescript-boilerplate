@@ -51,7 +51,7 @@ export class App {
     }
 
     private initRouter() {
-        this.express.use('/api', Router.init());
+        this.express.use(Router.init());
     }
 
     private initDatabaseConnection() {
@@ -71,7 +71,7 @@ export class App {
         const params = this.config.getParameters();
 
         App.server = this.express.listen(params.port, params.host, () => {
-            console.log(`App listening on http://${params.host}:${params.port}`);
+            console.log(`App[${this.config.env}] listening on http://${params.host}:${params.port}`);
 
             this.initDatabaseConnection();
 

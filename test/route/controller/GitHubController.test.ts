@@ -8,7 +8,7 @@ export class GitHubControllerTest extends BaseControllerTest {
 
     @test('repoDetailsAction success')
     repoDetailsAction(done: Function) {
-        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-repo`;
+        const url = `${BaseControllerTest.app.config.getServerUrl()}/gh-repo`;
         let config: {} = {
             url: url,
             method: 'POST',
@@ -19,14 +19,18 @@ export class GitHubControllerTest extends BaseControllerTest {
         HttpHelper
             .request(config)
             .then((res: any) => {
-                expect(res.id).to.be.equal(17249478);
+                expect(res.userName).to.be.an.instanceOf('gaearon');
+                expect(res.repoName).to.be.an.instanceOf('react');
+                expect(res.stars).to.be.an.instanceOf(8);
+
                 done();
             });
     }
 
+
     @test('repoCollectionAction success')
     repoCollectionAction(done: Function) {
-        const url = `${BaseControllerTest.app.config.getServerUrl()}/api/gh-user-repos`;
+        const url = `${BaseControllerTest.app.config.getServerUrl()}/gh-user-repos`;
         let config: {} = {
             url: url,
             method: 'GET',
@@ -37,7 +41,6 @@ export class GitHubControllerTest extends BaseControllerTest {
         HttpHelper
             .request(config)
             .then((res: any) => {
-                console.log(res);
 
                 expect(res).to.be.an.instanceOf(Array);
                 done();
