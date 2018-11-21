@@ -9,17 +9,28 @@ export class AppConfig {
     /**
      * @var EnvironmentInterface
      */
-    private readonly environments: EnvironmentInterface;
-
-    constructor() {
-        this.environments = require(join(__dirname, './params.json'));
-    }
+    private readonly parameters: ConfigParametersInterface;
 
     /**
      * @param {string} env
+     */
+    constructor(env: string) {
+        const environments: EnvironmentInterface = require(join(__dirname, './params.json'));
+
+        this.parameters = environments[env];
+    }
+
+    /**
      * @return ConfigParametersInterface
      */
-    public getParameters(env: string = 'dev'): ConfigParametersInterface {
-        return this.environments[env];
+    public getParameters(): ConfigParametersInterface {
+        return this.parameters;
+    };
+
+    /**
+     * @return {string}
+     */
+    public getServerUrl(): string {
+        return `http://${this.parameters.host}:${this.parameters.port}`;
     };
 }

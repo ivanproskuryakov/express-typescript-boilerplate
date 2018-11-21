@@ -1,12 +1,15 @@
 import {suite, test} from 'mocha-typescript';
 import {DatabaseAdapter} from "../../storage/DatabaseAdapter";
+import {AppConfig} from "../../app/AppConfig";
 
 @suite('DatabaseAdapter')
 export class DatabaseAdapterIntegationTest {
 
     @test('connect success')
     connect() {
-        let adapter = new DatabaseAdapter();
-        adapter.connect('', '1');
+        const adapter = new DatabaseAdapter();
+        const config = new AppConfig('test');
+        const params = config.getParameters();
+        adapter.connect(params.database.username, params.database.password);
     }
 }

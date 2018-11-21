@@ -4,28 +4,45 @@ import bodyParser from 'body-parser';
 import {Router} from '../route/Router';
 import {AppConfig} from './AppConfig';
 import {DatabaseAdapter} from '../storage/DatabaseAdapter';
+import * as http from "http";
 
 export class App {
     /**
-     * @var express.Application
-     */
-    private readonly express: express.Application;
-    /**
      * @var AppConfig
      */
-    private readonly config: AppConfig;
+    public readonly config: AppConfig;
+    /**
+     * @var http.Server
+     */
+    public static server: http.Server;
+    /**
+     * @var express.Application
+     */
+    public readonly express: express.Application;
 
-    constructor() {
+    /**
+     * @param {string} env
+     */
+    constructor(env: string) {
         this.express = express();
-        this.config = new AppConfig();
+        this.config = new AppConfig(env);
     }
 
-    public run() {
+    /**
+     * @param {Function} cb
+     */
+    public start(cb?: Function) {
         this.initAPIRouter();
-        this.initDatabaseConnection();
         this.initMiddleware();
 
-        this.listen();
+        this.listen(cb);
+    }
+
+    /**
+     * @param {Function} cb
+     */
+    public stop(cb?: Function) {
+        App.server.close(cb);
     }
 
     private initAPIRouter() {
@@ -46,11 +63,21 @@ export class App {
         this.express.use(bodyParser());
     }
 
-    private listen() {
+
+    /**
+     * @param {Function} cb
+     */
+    private listen(cb?: Function) {
         const params = this.config.getParameters();
 
-        this.express.listen(params.port, params.host, () => {
+        App.server = this.express.listen(params.port, params.host, () => {
             console.log(`App listening on http://${params.host}:${params.port}`);
+
+            this.initDatabaseConnection();
+
+            if (cb) {
+                cb();
+            }
         });
     }
 }

@@ -1,5 +1,5 @@
 import {App} from "./app/App";
 
-const app = new App();
+const app = new App('dev');
 
-app.run();
+app.start();
