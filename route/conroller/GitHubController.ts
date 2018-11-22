@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import {GitHubService} from "../../service/GitHubService";
+import {GitHubService} from '../../service/GitHubService';
 
 export class GitHubController {
 
@@ -12,7 +12,7 @@ export class GitHubController {
 
         gitHubService
             .getRepoDetails(req.body.repoName, req)
-            .then(data => res.status(200).send(data))
+            .then(data => res.status(200).send(data));
     }
 
     /**
@@ -24,7 +24,7 @@ export class GitHubController {
 
         gitHubService
             .getRepoCollection(req.body.userName, req)
-            .then(data => res.status(200).send(data))
+            .then(data => res.status(200).send(data));
     }
 
 }

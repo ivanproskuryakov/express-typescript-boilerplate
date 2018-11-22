@@ -1,8 +1,8 @@
 import {suite, test} from 'mocha-typescript';
-import {BaseControllerTest} from "./BaseControllerTest.test";
-import {HttpHelper} from "../../../helper/HttpHelper";
+import {BaseControllerTest} from './BaseControllerTest.test';
+import {HttpHelper} from '../../../helper/HttpHelper';
 import {expect} from 'chai';
-import {join} from "path";
+import {join} from 'path';
 
 const nock = require('nock');
 

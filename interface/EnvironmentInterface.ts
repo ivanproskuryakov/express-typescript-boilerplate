@@ -1,8 +1,8 @@
-import {ConfigParametersInterface} from './ConfigParametersInterface'
+import {ConfigParametersInterface} from './ConfigParametersInterface';
 
 /**
  * @interface EnvironmentInterface
  */
 export interface EnvironmentInterface {
-    [key: string]: ConfigParametersInterface,
+    [key: string]: ConfigParametersInterface;
 }

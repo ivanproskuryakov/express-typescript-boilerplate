@@ -1,5 +1,5 @@
 import express from 'express';
-import * as http from "http";
+import * as http from 'http';
 import bodyParser from 'body-parser';
 
 import {Router} from '../route/Router';
@@ -24,8 +24,6 @@ export class App {
      * @param {string} env
      */
     constructor(env: string) {
-        console.log(env);
-
         this.express = express();
         this.config = new AppConfig(env);
     }
@@ -59,10 +57,13 @@ export class App {
         const params = this.config.getParameters();
         const adapter = new DatabaseAdapter();
 
-        this.express.set('database', adapter.connect(
-            params.database.username,
-            params.database.password
-        ));
+        this.express.set(
+            'database',
+            adapter.connect(
+                params.database.username,
+                params.database.password,
+            ),
+        );
     }
 
     /**
@@ -72,7 +73,11 @@ export class App {
         const params = this.config.getParameters();
 
         App.server = this.express.listen(params.port, params.host, () => {
-            console.log(`App[${this.config.env}] listening on http://${params.host}:${params.port}`);
+            console.log(
+                `App[${this.config.env}] listening on http://${params.host}:${
+                    params.port
+                    }`,
+            );
 
             this.initDatabaseConnection();
 

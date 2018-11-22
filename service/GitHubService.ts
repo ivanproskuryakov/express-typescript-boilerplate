@@ -1,11 +1,10 @@
 import {Request} from 'express';
 
-import {HttpHelper} from "../helper/HttpHelper";
-import {RepoViewInterface} from "../interface/domain/RepoViewInterface";
-import {RepoModelInterface} from "../interface/domain/RepoModelInterface";
+import {HttpHelper} from '../helper/HttpHelper';
+import {RepoViewInterface} from '../interface/domain/RepoViewInterface';
+import {RepoModelInterface} from '../interface/domain/RepoModelInterface';
 
 export class GitHubService {
-
     private readonly url = 'https://api.github.com/repos';
 
     /**
@@ -13,18 +12,19 @@ export class GitHubService {
      * @param {Request} req
      * @return Promise<RepoViewInterface>
      */
-    public getRepoDetails(repoName: string, req: Request): Promise<RepoViewInterface> {
+    public getRepoDetails(
+        repoName: string,
+        req: Request,
+    ): Promise<RepoViewInterface> {
         return req.app
             .get('database')
             .getRepoByName(repoName)
             .then((res: any) => {
-
-                return this
-                    .queryRepoDetails(res.owner, res.name)
-                    .then((repoInfo: any) => {
-
+                return this.queryRepoDetails(res.owner, res.name).then(
+                    (repoInfo: any) => {
                         return Promise.resolve(this.buildView(res.owner, repoInfo));
-                    });
+                    },
+                );
             });
     }
 
@@ -33,7 +33,10 @@ export class GitHubService {
      * @param {Request} req
      * @return Promise<RepoViewInterface[]>
      */
-    public getRepoCollection(userName: string, req: Request): Promise<RepoViewInterface[]> {
+    public getRepoCollection(
+        userName: string,
+        req: Request,
+    ): Promise<RepoViewInterface[]> {
         return req.app
             .get('database')
             .fetchRepos()
@@ -41,7 +44,9 @@ export class GitHubService {
                 const reposGHInfo = [];
 
                 for (let i = 0; i < repos.length; i++) {
-                    reposGHInfo.push(this.queryRepoDetails(repos[i].owner, repos[i].name));
+                    reposGHInfo.push(
+                        this.queryRepoDetails(repos[i].owner, repos[i].name),
+                    );
                 }
 
                 return Promise.all(reposGHInfo);
@@ -51,9 +56,7 @@ export class GitHubService {
 
                 for (let i = 0; i < reposInfo.length; i++) {
                     if (reposInfo[i].owner.login === userName) {
-                        result.push(
-                            this.buildView(userName, reposInfo)
-                        );
+                        result.push(this.buildView(userName, reposInfo));
                     }
                 }
 
@@ -67,15 +70,12 @@ export class GitHubService {
      */
     private queryRepoDetails(username: string, repo: string): Promise<{}> {
         let config: {} = {
-            url: `${this.url}/${username}/${repo}`
+            url: `${this.url}/${username}/${repo}`,
         };
 
-        return HttpHelper
-            .request(config)
-            .then((data: {}) => {
-
-                return Promise.resolve(data);
-            });
+        return HttpHelper.request(config).then((data: {}) => {
+            return Promise.resolve(data);
+        });
     }
 
     /**
@@ -87,9 +87,7 @@ export class GitHubService {
         return {
             userName: userName,
             repoName: repo.name,
-            stars: repo.stargazers_count
-        }
+            stars: repo.stargazers_count,
+        };
     }
-
-
 }

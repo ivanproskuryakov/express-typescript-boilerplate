@@ -1,6 +1,6 @@
 import {suite, test} from 'mocha-typescript';
-import {DatabaseAdapter} from "../../storage/DatabaseAdapter";
-import {AppConfig} from "../../app/AppConfig";
+import {DatabaseAdapter} from '../../storage/DatabaseAdapter';
+import {AppConfig} from '../../app/AppConfig';
 
 @suite('DatabaseAdapter')
 export class DatabaseAdapterIntegationTest {

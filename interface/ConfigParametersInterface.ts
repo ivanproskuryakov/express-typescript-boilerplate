@@ -2,10 +2,10 @@
  * @interface ConfigParametersInterface
  */
 export interface ConfigParametersInterface {
-    host: string,
-    port: number,
+    host: string;
+    port: number;
     database: {
-        username: string,
-        password: string,
-    }
+        username: string;
+        password: string;
+    };
 }

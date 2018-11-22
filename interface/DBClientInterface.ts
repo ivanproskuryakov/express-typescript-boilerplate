@@ -2,8 +2,7 @@
  * @interface DBClientInterface
  */
 export interface DBClientInterface {
-    fetchRepos(): {}
+    fetchRepos(): {};
 
-    getRepoByName(): {}
+    getRepoByName(): {};
 }
-
