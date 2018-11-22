@@ -41,12 +41,14 @@ export class HttpHelper {
      * @return Promise
      */
     public static request(options: any = {}): Promise<any> {
-        let config = {
+        let config: any = {
             method: 'GET',
             headers: {"User-Agent": this.getRandomAgent()}
         };
 
         _.assign(config, options);
+
+        console.log(config.url);
 
         return axios
             .request(config)
