@@ -41,7 +41,7 @@ export class GitHubControllerTest extends BaseControllerTest {
     repoCollectionAction(done: Function) {
         const config: {} = {
             url: `${BaseControllerTest.app.config.getServerUrl()}/gh-user-repos`,
-            method: 'GET',
+            method: 'POST',
             data: {
                 userName: 'gaearon',
             }

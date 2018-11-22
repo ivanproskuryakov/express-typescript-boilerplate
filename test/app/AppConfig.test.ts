@@ -7,7 +7,7 @@ export class AppConfigTest {
 
     @test('getParameter success')
     getParametersSuccess() {
-        let config = new AppConfig('dev');
+        let config = new AppConfig('development');
         let params = config.getParameters();
 
         expect(params).to.be.an.instanceOf(Object);

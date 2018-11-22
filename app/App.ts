@@ -6,7 +6,6 @@ import {Router} from '../route/Router';
 import {AppConfig} from './AppConfig';
 import {DatabaseAdapter} from '../storage/DatabaseAdapter';
 
-
 export class App {
     /**
      * @type AppConfig
@@ -25,6 +24,8 @@ export class App {
      * @param {string} env
      */
     constructor(env: string) {
+        console.log(env);
+
         this.express = express();
         this.config = new AppConfig(env);
     }

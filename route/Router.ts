@@ -12,7 +12,7 @@ export class Router {
         return express
             .Router()
             .post(`/gh-repo`, gitHubController.repoDetailsAction)
-            .get(`/gh-user-repos`, gitHubController.repoCollectionAction);
+            .post(`/gh-user-repos`, gitHubController.repoCollectionAction);
     }
 
 }
