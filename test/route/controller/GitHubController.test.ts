@@ -11,9 +11,6 @@ export class GitHubControllerTest extends BaseControllerTest {
 
     @test('repoDetailsAction success')
     repoDetailsAction(done: Function) {
-        nock.cleanAll();
-
-        const githubNock = nock('https://api.github.com');
         const config: {} = {
             url: `${BaseControllerTest.app.config.getServerUrl()}/gh-repo`,
             method: 'POST',
@@ -22,8 +19,8 @@ export class GitHubControllerTest extends BaseControllerTest {
             }
         };
 
-
-        githubNock
+        nock.cleanAll();
+        nock('https://api.github.com')
             .get('/repos/gaearon/react')
             .reply(200, this.getContents('gaearon.react.json'))
             .persist();
@@ -32,8 +29,6 @@ export class GitHubControllerTest extends BaseControllerTest {
         HttpHelper
             .request(config)
             .then((res: any) => {
-                console.log(res);
-
                 expect(res.userName).to.be.equal('gaearon');
                 expect(res.repoName).to.be.equal('react');
                 expect(res.stars).to.be.equal(8);
@@ -42,11 +37,8 @@ export class GitHubControllerTest extends BaseControllerTest {
             });
     }
 
-
     @test('repoCollectionAction success')
     repoCollectionAction(done: Function) {
-        nock.cleanAll();
-
         const config: {} = {
             url: `${BaseControllerTest.app.config.getServerUrl()}/gh-user-repos`,
             method: 'GET',
@@ -55,29 +47,54 @@ export class GitHubControllerTest extends BaseControllerTest {
             }
         };
 
-        // nock('https://api.github.com')
-        //     .get('/repos/gaearon/react')
-        //     .reply(200, this.getContents('gaearon.react.json'))
-        //     .persist();
-        //
-        // nock('https://api.github.com')
-        //     .get('/repos/gaearon/enzyme')
-        //     .reply(200, this.getContents('gaearon.enzyme.json'))
-        //     .persist();
-        //
-        // nock('https://api.github.com')
-        //     .get('/repos/gaearon/react')
-        //     .reply(200, this.getContents('gaearon.react.json'))
-        //     .persist();
+        nock.cleanAll();
+
+        nock('https://api.github.com')
+            .get('/repos/gaearon/react')
+            .reply(200, this.getContents('gaearon.react.json'))
+            .persist();
+        nock('https://api.github.com')
+            .get('/repos/gaearon/enzyme')
+            .reply(200, this.getContents('gaearon.enzyme.json'))
+            .persist();
+        nock('https://api.github.com')
+            .get('/repos/gaearon/create-react-app')
+            .reply(200, this.getContents('gaearon.create-react-app.json'))
+            .persist();
+
+        nock('https://api.github.com')
+            .get('/repos/getify/fasy')
+            .reply(200, this.getContents('getify.fasy.json'))
+            .persist();
+        nock('https://api.github.com')
+            .get('/repos/getify/Functional-Light-JS')
+            .reply(200, this.getContents('getify.Functional-Light-JS.json'))
+            .persist();
+        nock('https://api.github.com')
+            .get('/repos/getify/You-Dont-Know-JS')
+            .reply(200, this.getContents('getify.You-Dont-Know-JS.json'))
+            .persist();
+
+        nock('https://api.github.com')
+            .get('/repos/peggyrayzis/apollo-client')
+            .reply(200, this.getContents('peggyrayzis.apollo-client.json'))
+            .persist();
+        nock('https://api.github.com')
+            .get('/repos/peggyrayzis/apollo-client-devtools')
+            .reply(200, this.getContents('peggyrayzis.apollo-client-devtools.json'))
+            .persist();
+        nock('https://api.github.com')
+            .get('/repos/peggyrayzis/guide-to-graphql')
+            .reply(200, this.getContents('peggyrayzis.guide-to-graphql.json'))
+            .persist();
 
 
         HttpHelper
             .request(config)
             .then((res: any) => {
 
-                console.log(res);
-                
                 expect(res).to.be.an.instanceOf(Array);
+                expect(res.length).to.be.equal(3);
                 done();
             });
     }

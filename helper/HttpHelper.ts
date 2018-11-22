@@ -48,8 +48,6 @@ export class HttpHelper {
 
         _.assign(config, options);
 
-        console.log(config.url);
-
         return axios
             .request(config)
             .then((res: any) => {
