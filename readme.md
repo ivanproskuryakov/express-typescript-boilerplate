@@ -1,5 +1,5 @@
-The `params.dist.json` file contains the distribution of the settings used by the app.
-To get it running you'll need to create `params.json` and adjust it.
+The `app/params.dist.json` file contains the distribution of the settings used by the app.
+To get it running you'll need to install modules with `npm install` and write settings to `app/params.json`.
 
 ### Running tests
 
