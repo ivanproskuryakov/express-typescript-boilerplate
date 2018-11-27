@@ -4,7 +4,7 @@ To get it running you'll need to install modules with `npm install` and write se
 ### Running tests
 
 ```
-npm run dev
+npm run test
 ```
 ### Running the app in development
 ```
@@ -12,7 +12,7 @@ npm run dev
 ```
 ### Running the app in staging|production
 ```
-npm run dev
+npm start
 ```
 
 ------
