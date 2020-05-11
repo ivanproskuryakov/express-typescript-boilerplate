@@ -7,83 +7,85 @@ import {AppConfig} from './AppConfig';
 import {DatabaseAdapter} from '../storage/DatabaseAdapter';
 
 export class App {
-    /**
-     * @type AppConfig
-     */
-    public readonly config: AppConfig;
-    /**
-     * @type http.Server
-     */
-    public static server: http.Server;
-    /**
-     * @type express.Application
-     */
-    public readonly express: express.Application;
+  /**
+   * @type AppConfig
+   */
+  public readonly config: AppConfig;
+  /**
+   * @type http.Server
+   */
+  public static server: http.Server;
+  /**
+   * @type express.Application
+   */
+  public readonly express: express.Application;
 
-    /**
-     * @param {string} env
-     */
-    constructor(env: string) {
-        this.express = express();
-        this.config = new AppConfig(env);
-    }
+  /**
+   * @param {string} env
+   */
+  constructor(env: string) {
+    this.express = express();
+    this.config = new AppConfig(env);
+  }
 
-    /**
-     * @param {Function} cb
-     */
-    public start(cb?: Function) {
-        this.initMiddleware();
-        this.initRouter();
+  /**
+   * @param {Function} cb
+   */
+  public start(cb?: Function) {
+    this.initMiddleware();
+    this.initRouter();
 
-        this.listen(cb);
-    }
+    this.listen(cb);
+  }
 
-    /**
-     * @param {Function} cb
-     */
-    public stop(cb?: Function) {
-        App.server.close(cb);
-    }
+  /**
+   * @param {Function} cb
+   */
+  public stop(cb?: Function) {
+    App.server.close(cb);
+  }
 
-    private initMiddleware() {
-        this.express.use(bodyParser());
-    }
+  private initMiddleware() {
+    this.express.use(bodyParser());
+  }
 
-    private initRouter() {
-        this.express.use(Router.init());
-    }
+  private initRouter() {
+    const router = new Router();
 
-    private initDatabaseConnection() {
-        const params = this.config.getParameters();
-        const adapter = new DatabaseAdapter();
+    this.express.use(router.buildRoutes());
+  }
 
-        this.express.set(
-            'database',
-            adapter.connect(
-                params.database.username,
-                params.database.password,
-            ),
-        );
-    }
+  private initDatabaseConnection() {
+    const params = this.config.getParameters();
+    const adapter = new DatabaseAdapter();
 
-    /**
-     * @param {Function} cb
-     */
-    private listen(cb?: Function) {
-        const params = this.config.getParameters();
+    this.express.set(
+      'database',
+      adapter.connect(
+        params.database.username,
+        params.database.password,
+      ),
+    );
+  }
 
-        App.server = this.express.listen(params.port, params.host, () => {
-            console.log(
-                `App[${this.config.env}] listening on http://${params.host}:${
-                    params.port
-                    }`,
-            );
+  /**
+   * @param {Function} cb
+   */
+  private listen(cb?: Function) {
+    const params = this.config.getParameters();
 
-            this.initDatabaseConnection();
+    App.server = this.express.listen(params.port, params.host, () => {
+      console.log(
+        `App[${this.config.env}] listening on http://${params.host}:${
+          params.port
+          }`,
+      );
 
-            if (cb) {
-                cb();
-            }
-        });
-    }
+      this.initDatabaseConnection();
+
+      if (cb) {
+        cb();
+      }
+    });
+  }
 }

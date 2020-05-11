@@ -5,11 +5,12 @@ import {expect} from 'chai';
 @suite('Router')
 export class RouterTest {
 
-    @test('init success')
-    initSuccess() {
-        const router = Router.init();
+  @test('init success')
+  initSuccess() {
+    const r = new Router();
+    const routes = r.buildRoutes();
 
-        expect(router.stack[0].route.path).to.be.equal('/gh-repo');
-        expect(router.stack[1].route.path).to.be.equal('/gh-user-repos');
-    }
+    expect(routes.stack[0].route.path).to.be.equal('/gh-repo');
+    expect(routes.stack[1].route.path).to.be.equal('/gh-user-repos');
+  }
 }
